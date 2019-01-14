@@ -5,7 +5,7 @@
 
   Example of callback in use
 
-   server.on("/json", HTTP_ANY, [](AsyncWebServerRequest * request) {
+   server.on("/json", AWS_HTTP_ANY, [](AsyncWebServerRequest * request) {
 
     AsyncJsonResponse * response = new AsyncJsonResponse();
     JsonObject& root = response->getRoot();
@@ -30,7 +30,7 @@
     // ...
   });
   server.addHandler(handler);
-  
+
 */
 #ifndef ASYNC_JSON_H_
 #define ASYNC_JSON_H_
@@ -108,7 +108,7 @@ protected:
   int _contentLength;
   int _maxContentLength;
 public:
-  AsyncCallbackJsonWebHandler(const String& uri, ArJsonRequestHandlerFunction onRequest) : _uri(uri), _method(HTTP_POST|HTTP_PUT|HTTP_PATCH), _onRequest(onRequest), _maxContentLength(16384) {}
+  AsyncCallbackJsonWebHandler(const String& uri, ArJsonRequestHandlerFunction onRequest) : _uri(uri), _method(AWS_HTTP_POST|AWS_HTTP_PUT|AWS_HTTP_PATCH), _onRequest(onRequest), _maxContentLength(16384) {}
   void setMethod(WebRequestMethodComposite method){ _method = method; }
   void setMaxContentLength(int maxContentLength){ _maxContentLength = maxContentLength; }
   void onRequest(ArJsonRequestHandlerFunction fn){ _onRequest = fn; }

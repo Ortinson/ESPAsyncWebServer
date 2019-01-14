@@ -151,7 +151,7 @@ void setup(){
       Serial.printf("POST");
     else if(request->method() == HTTP_DELETE)
       Serial.printf("DELETE");
-    else if(request->method() == HTTP_PUT)
+    else if(request->method() == AWS_HTTP_PUT)
       Serial.printf("PUT");
     else if(request->method() == HTTP_PATCH)
       Serial.printf("PATCH");

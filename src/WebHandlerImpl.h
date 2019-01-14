@@ -68,7 +68,7 @@ class AsyncCallbackWebHandler: public AsyncWebHandler {
     ArUploadHandlerFunction _onUpload;
     ArBodyHandlerFunction _onBody;
   public:
-    AsyncCallbackWebHandler() : _uri(), _method(HTTP_ANY), _onRequest(NULL), _onUpload(NULL), _onBody(NULL){}
+    AsyncCallbackWebHandler() : _uri(), _method(AWS_HTTP_ANY), _onRequest(NULL), _onUpload(NULL), _onBody(NULL){}
     void setUri(const String& uri){ _uri = uri; }
     void setMethod(WebRequestMethodComposite method){ _method = method; }
     void onRequest(ArRequestHandlerFunction fn){ _onRequest = fn; }
@@ -89,7 +89,7 @@ class AsyncCallbackWebHandler: public AsyncWebHandler {
       request->addInterestingHeader("ANY");
       return true;
     }
-  
+
     virtual void handleRequest(AsyncWebServerRequest *request) override final {
       if(_onRequest)
         _onRequest(request);

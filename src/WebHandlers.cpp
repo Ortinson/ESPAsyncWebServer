@@ -81,8 +81,8 @@ AsyncStaticWebHandler& AsyncStaticWebHandler::setLastModified(){
 }
 #endif
 bool AsyncStaticWebHandler::canHandle(AsyncWebServerRequest *request){
-  if(request->method() != HTTP_GET 
-    || !request->url().startsWith(_uri) 
+  if(request->method() != AWS_HTTP_GET
+    || !request->url().startsWith(_uri)
     || !request->isExpectedRequestedConnType(RCT_DEFAULT, RCT_HTTP)
   ){
     return false;

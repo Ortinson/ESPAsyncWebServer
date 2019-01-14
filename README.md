@@ -1031,7 +1031,7 @@ client->binary(flash_binary, 4);
 ```
 
 ### Direct access to web socket message buffer
-When sending a web socket message using the above methods a buffer is created.  Under certain circumstances you might want to manipulate or populate this buffer directly from your application, for example to prevent unnecessary duplications of the data.  This example below shows how to create a buffer and print data to it from an ArduinoJson object then send it.   
+When sending a web socket message using the above methods a buffer is created.  Under certain circumstances you might want to manipulate or populate this buffer directly from your application, for example to prevent unnecessary duplications of the data.  This example below shows how to create a buffer and print data to it from an ArduinoJson object then send it.
 
 ```cpp
 void sendDataWs(AsyncWebSocketClient * client)
@@ -1371,7 +1371,7 @@ Example of OTA code
     // Clean SPIFFS
     SPIFFS.end();
 
-    // Disable client connections    
+    // Disable client connections
     ws.enable(false);
 
     // Advertise connected clients what's going on
@@ -1386,7 +1386,7 @@ Example of OTA code
 
 ### Adding Default Headers
 
-In some cases, such as when working with CORS, or with some sort of custom authentication system, 
+In some cases, such as when working with CORS, or with some sort of custom authentication system,
 you might need to define a header that should get added to all responses (including static, websocket and EventSource).
 The DefaultHeaders singleton allows you to do this.
 

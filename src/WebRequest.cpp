@@ -40,7 +40,7 @@ AsyncWebServerRequest::AsyncWebServerRequest(AsyncWebServer* s, AsyncClient* c)
   , _temp()
   , _parseState(0)
   , _version(0)
-  , _method(HTTP_ANY)
+  , _method(AWS_HTTP_ANY)
   , _url()
   , _host()
   , _contentType()
@@ -253,19 +253,19 @@ bool AsyncWebServerRequest::_parseReqHead(){
   _temp = _temp.substring(index+1);
 
   if(m == "GET"){
-    _method = HTTP_GET;
+    _method = AWS_HTTP_GET;
   } else if(m == "POST"){
-    _method = HTTP_POST;
+    _method = AWS_HTTP_POST;
   } else if(m == "DELETE"){
-    _method = HTTP_DELETE;
+    _method = AWS_HTTP_DELETE;
   } else if(m == "PUT"){
-    _method = HTTP_PUT;
+    _method = AWS_HTTP_PUT;
   } else if(m == "PATCH"){
-    _method = HTTP_PATCH;
+    _method = AWS_HTTP_PATCH;
   } else if(m == "HEAD"){
-    _method = HTTP_HEAD;
+    _method = AWS_HTTP_HEAD;
   } else if(m == "OPTIONS"){
-    _method = HTTP_OPTIONS;
+    _method = AWS_HTTP_OPTIONS;
   }
 
   String g = String();
@@ -601,15 +601,15 @@ bool AsyncWebServerRequest::hasHeader(const __FlashStringHelper * data) const {
       n += 1;
   }
   char * name = (char*) malloc(n+1);
-  name[n] = 0; 
+  name[n] = 0;
   if (name) {
     for(size_t b=0; b<n; b++)
-      name[b] = pgm_read_byte(p++);    
-    bool result = hasHeader( String(name) ); 
-    free(name); 
-    return result; 
+      name[b] = pgm_read_byte(p++);
+    bool result = hasHeader( String(name) );
+    free(name);
+    return result;
   } else {
-    return false; 
+    return false;
   }
 }
 
@@ -624,15 +624,15 @@ AsyncWebHeader* AsyncWebServerRequest::getHeader(const String& name) const {
 
 AsyncWebHeader* AsyncWebServerRequest::getHeader(const __FlashStringHelper * data) const {
   PGM_P p = reinterpret_cast<PGM_P>(data);
-  size_t n = strlen_P(p); 
+  size_t n = strlen_P(p);
   char * name = (char*) malloc(n+1);
   if (name) {
-    strcpy_P(name, p); 
-    AsyncWebHeader* result = getHeader( String(name)); 
-    free(name); 
-    return result; 
+    strcpy_P(name, p);
+    AsyncWebHeader* result = getHeader( String(name));
+    free(name);
+    return result;
   } else {
-    return nullptr; 
+    return nullptr;
   }
 }
 
@@ -659,14 +659,14 @@ bool AsyncWebServerRequest::hasParam(const __FlashStringHelper * data, bool post
   size_t n = strlen_P(p);
 
   char * name = (char*) malloc(n+1);
-  name[n] = 0; 
+  name[n] = 0;
   if (name) {
-    strcpy_P(name,p);    
-    bool result = hasParam( name, post, file); 
-    free(name); 
-    return result; 
+    strcpy_P(name,p);
+    bool result = hasParam( name, post, file);
+    free(name);
+    return result;
   } else {
-    return false; 
+    return false;
   }
 }
 
@@ -684,12 +684,12 @@ AsyncWebParameter* AsyncWebServerRequest::getParam(const __FlashStringHelper * d
   size_t n = strlen_P(p);
   char * name = (char*) malloc(n+1);
   if (name) {
-    strcpy_P(name, p);   
-    AsyncWebParameter* result = getParam(name, post, file); 
-    free(name); 
-    return result; 
+    strcpy_P(name, p);
+    AsyncWebParameter* result = getParam(name, post, file);
+    free(name);
+    return result;
   } else {
-    return nullptr; 
+    return nullptr;
   }
 }
 
@@ -867,15 +867,15 @@ bool AsyncWebServerRequest::hasArg(const char* name) const {
 
 bool AsyncWebServerRequest::hasArg(const __FlashStringHelper * data) const {
   PGM_P p = reinterpret_cast<PGM_P>(data);
-  size_t n = strlen_P(p); 
+  size_t n = strlen_P(p);
   char * name = (char*) malloc(n+1);
   if (name) {
-    strcpy_P(name, p);    
-    bool result = hasArg( name ); 
-    free(name); 
-    return result; 
+    strcpy_P(name, p);
+    bool result = hasArg( name );
+    free(name);
+    return result;
   } else {
-    return false; 
+    return false;
   }
 }
 
@@ -895,9 +895,9 @@ const String& AsyncWebServerRequest::arg(const __FlashStringHelper * data) const
   char * name = (char*) malloc(n+1);
   if (name) {
     strcpy_P(name, p);
-    const String & result = arg( String(name) ); 
-    free(name); 
-    return result; 
+    const String & result = arg( String(name) );
+    free(name);
+    return result;
   } else {
     return SharedEmptyString;
   }
@@ -919,17 +919,17 @@ const String& AsyncWebServerRequest::header(const char* name) const {
 
 const String& AsyncWebServerRequest::header(const __FlashStringHelper * data) const {
   PGM_P p = reinterpret_cast<PGM_P>(data);
-  size_t n = strlen_P(p); 
+  size_t n = strlen_P(p);
   char * name = (char*) malloc(n+1);
   if (name) {
-    strcpy_P(name, p);  
-    const String & result = header( (const char *)name ); 
-    free(name); 
-    return result; 
+    strcpy_P(name, p);
+    const String & result = header( (const char *)name );
+    free(name);
+    return result;
   } else {
-    return SharedEmptyString; 
+    return SharedEmptyString;
   }
-};  
+};
 
 
 const String& AsyncWebServerRequest::header(size_t i) const {
@@ -967,14 +967,14 @@ String AsyncWebServerRequest::urlDecode(const String& text) const {
 
 
 const char * AsyncWebServerRequest::methodToString() const {
-  if(_method == HTTP_ANY) return "ANY";
-  else if(_method & HTTP_GET) return "GET";
-  else if(_method & HTTP_POST) return "POST";
-  else if(_method & HTTP_DELETE) return "DELETE";
-  else if(_method & HTTP_PUT) return "PUT";
-  else if(_method & HTTP_PATCH) return "PATCH";
-  else if(_method & HTTP_HEAD) return "HEAD";
-  else if(_method & HTTP_OPTIONS) return "OPTIONS";
+  if(_method == AWS_HTTP_ANY) return "ANY";
+  else if(_method & AWS_HTTP_GET) return "GET";
+  else if(_method & AWS_HTTP_POST) return "POST";
+  else if(_method & AWS_HTTP_DELETE) return "DELETE";
+  else if(_method & AWS_HTTP_PUT) return "PUT";
+  else if(_method & AWS_HTTP_PATCH) return "PATCH";
+  else if(_method & AWS_HTTP_HEAD) return "HEAD";
+  else if(_method & AWS_HTTP_OPTIONS) return "OPTIONS";
   return "UNKNOWN";
 }
 

@@ -145,7 +145,7 @@ size_t AsyncEventSourceMessage::send(AsyncClient *client) {
   if(client->canSend())
     client->send();
   _sent += sent;
-  return sent; 
+  return sent;
 }
 
 // Client
@@ -158,7 +158,7 @@ AsyncEventSourceClient::AsyncEventSourceClient(AsyncWebServerRequest *request, A
   _lastId = 0;
   if(request->hasHeader("Last-Event-ID"))
     _lastId = atoi(request->getHeader("Last-Event-ID")->value().c_str());
-    
+
   _client->setRxTimeout(0);
   _client->onError(NULL, NULL);
   _client->onAck([](void *r, AsyncClient* c, size_t len, uint32_t time){ ((AsyncEventSourceClient*)(r))->_onAck(len, time); }, this);
@@ -271,7 +271,7 @@ void AsyncEventSource::_addClient(AsyncEventSourceClient * client){
     client->write((const char *)temp, 2053);
     free(temp);
   }*/
-  
+
   _clients.add(client);
   if(_connectcb)
     _connectcb(client);
@@ -307,7 +307,7 @@ size_t AsyncEventSource::count() const {
 }
 
 bool AsyncEventSource::canHandle(AsyncWebServerRequest *request){
-  if(request->method() != HTTP_GET || !request->url().equals(_url) || !request->isExpectedRequestedConnType(RCT_EVENT))
+  if(request->method() != AWS_HTTP_GET || !request->url().equals(_url) || !request->isExpectedRequestedConnType(RCT_EVENT))
     return false;
   request->addInterestingHeader("Last-Event-ID");
   return true;
